@@ -1,6 +1,7 @@
 import "./loadEnvironment.js";
 import connectDatabase from "./database/connectDatabase.js";
 import mongoose from "mongoose";
+import startServer from "./server/startServer.js";
 
 mongoose.set("toJSON", {
   virtuals: true,
@@ -11,5 +12,7 @@ mongoose.set("toJSON", {
 });
 
 const mongoUrl = process.env.MONGODB_CONNECTION_URL!;
+const port = process.env.PORT ?? 3000;
 
 await connectDatabase(mongoUrl);
+await startServer(+port);
