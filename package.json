@@ -1,0 +1,17 @@
+{
+  "name": "founders-back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "prepare": "husky install",
+    "build": "tsc",
+    "build:dev": "tsc --watch",
+    "start": "node dist",
+    "start:dev": "node --watch dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
