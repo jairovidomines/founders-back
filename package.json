@@ -9,13 +9,16 @@
     "build": "tsc",
     "build:dev": "tsc --watch",
     "start": "node dist",
-    "start:dev": "node --watch dist"
+    "start:dev": "node --watch dist",
+    "test": "jest test --passWithNoTests",
+    "test:coverage": "jest test --coverage --watchAll=false --passWithNoTests"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "lint-staged": "^13.1.2",
-    "prettier": "^2.8.4"
+    "prettier": "^2.8.4",
+    "husky": "^8.0.0"
   }
 }
