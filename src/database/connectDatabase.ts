@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import createDebug from "debug";
 
-const debug = createDebug("users:database");
+const debug = createDebug("founders:database");
 
 const connectDatabase = async (mongoUrl: string) => {
   mongoose.set("strictQuery", false);
