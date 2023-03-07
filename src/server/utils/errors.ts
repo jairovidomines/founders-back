@@ -1,9 +1,9 @@
 import CustomError from "../../CustomError/CustomError";
-import statusCode from "./statusCode";
+import statusCodes from "./statusCode";
 
 const {
   clientError: { unauthorized },
-} = statusCode;
+} = statusCodes;
 
 export const loginUsersErrors = {
   userNotFound: new CustomError(
