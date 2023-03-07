@@ -2,7 +2,7 @@ import "../loadEnvironment.js";
 import createDebug from "debug";
 import { app } from "./app.js";
 
-const debug = createDebug("users:server:startServer");
+const debug = createDebug("founders:server:startServer");
 
 const startServer = async (port: number) =>
   new Promise((resolve) => {

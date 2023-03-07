@@ -1,7 +1,7 @@
 import { type Request, type Response, type NextFunction } from "express";
-import type CustomError from "../../../CustomError/CustomError";
+import CustomError from "../../../CustomError/CustomError";
 import statusCode from "../../utils/statusCode";
-import { generalError } from "./errors";
+import { generalError, notFoundError } from "./errors";
 
 const {
   serverError: { internalServer },
@@ -21,7 +21,7 @@ const next: NextFunction = jest.fn();
 
 describe("Given a generalError middleware", () => {
   describe("When the error received is not a custom error", () => {
-    test("Then it should call response 500 status code and 'Something went wrong' as a public message", () => {
+    test("Then it should call response with a status code 500 and 'Something went wrong' as a public message", () => {
       const error = new Error();
       const expectedPublicMessage = "Something went wrong";
 
@@ -29,6 +29,22 @@ describe("Given a generalError middleware", () => {
 
       expect(res.status).toHaveBeenCalledWith(internalServer);
       expect(res.json).toHaveBeenCalledWith({ error: expectedPublicMessage });
+    });
+  });
+});
+
+describe("Given a notFoundError middleware", () => {
+  describe("When it receives a request", () => {
+    test("Then it should call its next method with a status code 404 and 'Endpoint not found' as a message and public message", () => {
+      const expectedNotFoundError = new CustomError(
+        "Endpoint not found",
+        404,
+        "Endpoint not found"
+      );
+
+      notFoundError(req, res as Response, next);
+
+      expect(next).toHaveBeenCalledWith(expectedNotFoundError);
     });
   });
 });
