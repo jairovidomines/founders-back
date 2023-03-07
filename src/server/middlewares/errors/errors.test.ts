@@ -1,11 +1,11 @@
 import { type Request, type Response, type NextFunction } from "express";
-import CustomError from "../../../CustomError/CustomError";
-import statusCode from "../../utils/statusCode";
-import { generalError, notFoundError } from "./errors";
+import CustomError from "../../../CustomError/CustomError.js";
+import statusCodes from "../../utils/statusCode.js";
+import { generalError, notFoundError } from "./errors.js";
 
 const {
   serverError: { internalServer },
-} = statusCode;
+} = statusCodes;
 
 beforeEach(() => {
   jest.clearAllMocks();

@@ -2,14 +2,14 @@ import "../../../loadEnvironment.js";
 import createDebug from "debug";
 import { type Request, type Response, type NextFunction } from "express";
 import CustomError from "../../../CustomError/CustomError.js";
-import statusCode from "../../utils/statusCode.js";
+import statusCodes from "../../utils/statusCode.js";
 
 const debug = createDebug("founders:server:middlewares:errors");
 
 const {
   clientError: { notFound },
   serverError: { internalServer },
-} = statusCode;
+} = statusCodes;
 
 export const generalError = (
   error: CustomError,
