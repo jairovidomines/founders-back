@@ -1,5 +1,5 @@
-import CustomError from "../../CustomError/CustomError";
-import statusCodes from "./statusCode";
+import CustomError from "../../CustomError/CustomError.js";
+import statusCodes from "./statusCode.js";
 
 const {
   clientError: { unauthorized },
