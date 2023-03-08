@@ -1,7 +1,7 @@
 import { type Request, type Response, type NextFunction } from "express";
-import { type UserCredentials } from "./types.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import { type UserCredentials } from "./types.js";
 import { loginUsersErrors } from "../../utils/errors.js";
 import { type CustomJwtPayload } from "../../types.js";
 import User from "../../../database/models/User.js";
@@ -21,16 +21,14 @@ export const loginUser = async (
   next: NextFunction
 ) => {
   const { password, username } = req.body;
-
   try {
     const user = await User.findOne({ username }).exec();
-
     if (!user) {
       next(loginUsersErrors.userNotFound);
       return;
     }
 
-    if (!(await bcrypt.compare(password, password))) {
+    if (!(await bcrypt.compare(password, user.password))) {
       next(loginUsersErrors.wrongPassword);
       return;
     }
@@ -43,7 +41,6 @@ export const loginUser = async (
     const token = jwt.sign(jwtPayload, process.env.JWT_SECRET!, {
       expiresIn: "3d",
     });
-
     res.status(okCode).json({ token });
   } catch (error: unknown) {
     next(error);

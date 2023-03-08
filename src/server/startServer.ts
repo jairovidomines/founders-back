@@ -8,7 +8,7 @@ const startServer = async (port: number) =>
   new Promise((resolve) => {
     const server = app.listen(port, () => {
       resolve(server);
-      debug(`Server listening on port https://localhost/${port}`);
+      debug(`Server listening on port http://localhost:${port}`);
     });
   });
 
