@@ -16,7 +16,7 @@ const res: Partial<Response> = {
   json: jest.fn(),
 };
 
-const req = {} as Request;
+const req: Partial<Request> = {};
 const next: NextFunction = jest.fn();
 
 describe("Given a generalError middleware", () => {
@@ -25,7 +25,7 @@ describe("Given a generalError middleware", () => {
       const error = new Error();
       const expectedPublicMessage = "Something went wrong";
 
-      generalError(error as CustomError, req, res as Response, next);
+      generalError(error as CustomError, req as Request, res as Response, next);
 
       expect(res.status).toHaveBeenCalledWith(internalServer);
       expect(res.json).toHaveBeenCalledWith({ error: expectedPublicMessage });
@@ -42,7 +42,7 @@ describe("Given a notFoundError middleware", () => {
         "Endpoint not found"
       );
 
-      notFoundError(req, res as Response, next);
+      notFoundError(req as Request, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(expectedNotFoundError);
     });

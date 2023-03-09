@@ -12,8 +12,6 @@ module.exports = {
           "error",
           "interface",
         ],
-
-        "@typescript-eslint/consistent-type-assertions": "off",
       },
       extends: ["xo-typescript", "prettier"],
       files: ["*.ts", "*.tsx"],
