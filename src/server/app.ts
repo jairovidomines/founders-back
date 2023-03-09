@@ -10,6 +10,7 @@ const allowedCorsOrigin = [
   process.env.CORS_ALLOWED_ORIGIN_LOCAL!,
   process.env.CORS_ALLOWED_ORIGIN_LOCAL_3001!,
   process.env.CORS_ALLOWED_ORIGIN_LOCAL_3002!,
+  process.env.CORS_ALLOWED_ORIGIN_LOCAL_3003!,
   process.env.CORS_ALLOWED_ORIGIN_PRODUCTION!,
 ];
 
