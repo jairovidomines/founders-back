@@ -3,11 +3,11 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
-import connectDatabase from "../../database/connectDatabase.js";
-import User from "../../database/models/User.js";
-import statusCodes from "../../server/utils/statusCode.js";
-import { app } from "../../server/app.js";
-import { type UserCredentials } from "../../server/controllers/usersControllers/types.js";
+import connectDatabase from "../../../database/connectDatabase.js";
+import User from "../../../database/models/User.js";
+import statusCodes from "../../utils/statusCode.js";
+import { app } from "../../app.js";
+import { type UserCredentials } from "../../controllers/usersControllers/types.js";
 
 const { success } = statusCodes;
 

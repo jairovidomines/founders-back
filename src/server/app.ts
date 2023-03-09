@@ -3,11 +3,13 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import { generalError, notFoundError } from "./middlewares/errors/errors.js";
-import usersRouter from "../router/usersRouter/usersRouter.js";
+import usersRouter from "./routers/usersRouter/usersRouter.js";
 export const app = express();
 
 const allowedCorsOrigin = [
   process.env.CORS_ALLOWED_ORIGIN_LOCAL!,
+  process.env.CORS_ALLOWED_ORIGIN_LOCAL_3001!,
+  process.env.CORS_ALLOWED_ORIGIN_LOCAL_3002!,
   process.env.CORS_ALLOWED_ORIGIN_PRODUCTION!,
 ];
 
