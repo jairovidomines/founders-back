@@ -21,6 +21,7 @@ export const loginUser = async (
   next: NextFunction
 ) => {
   const { password, username } = req.body;
+
   try {
     const user = await User.findOne({ username }).exec();
     if (!user) {

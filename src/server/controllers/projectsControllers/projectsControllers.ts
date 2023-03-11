@@ -21,7 +21,7 @@ export const getProjects = async (
     const customError = new CustomError(
       "Bad request",
       badRequest,
-      "Couldn't retrieve projects"
+      "Couldn't find projects"
     );
 
     next(customError);
