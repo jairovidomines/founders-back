@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { type UserCredentials } from "./types.js";
 import { loginUsersErrors } from "../../utils/errors.js";
 import { type CustomJwtPayload } from "../../types.js";
-import User from "../../../database/models/User.js";
+import User from "../../../database/models/Users/User.js";
 import statusCodes from "../../utils/statusCode.js";
 
 const {

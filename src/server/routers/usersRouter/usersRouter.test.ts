@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import connectDatabase from "../../../database/connectDatabase.js";
-import User from "../../../database/models/User.js";
+import User from "../../../database/models/Users/User.js";
 import statusCodes from "../../utils/statusCode.js";
 import { app } from "../../app.js";
 import { type UserCredentials } from "../../controllers/usersControllers/types.js";
