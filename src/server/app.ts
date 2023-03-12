@@ -26,7 +26,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.use("/users", usersRouter);
-app.use(projectsRouter);
+app.use("/projects", projectsRouter);
 
 app.use(notFoundError);
 app.use(generalError);
