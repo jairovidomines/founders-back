@@ -1,6 +1,6 @@
 import { type Request, type Response } from "express";
-import CustomError from "../../../CustomError/CustomError";
-import Project from "../../../database/models/Projects/Projects";
+import CustomError from "../../../CustomError/CustomError.js";
+import Project from "../../../database/models/Projects/Projects.js";
 import {
   type ProjectsData,
   type ProjectData,

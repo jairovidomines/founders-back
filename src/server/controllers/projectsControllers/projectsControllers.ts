@@ -1,7 +1,7 @@
 import { type NextFunction, type Request, type Response } from "express";
-import CustomError from "../../../CustomError/CustomError";
-import Project from "../../../database/models/Projects/Projects";
-import statusCodes from "../../utils/statusCode";
+import CustomError from "../../../CustomError/CustomError.js";
+import Project from "../../../database/models/Projects/Projects.js";
+import statusCodes from "../../utils/statusCode.js";
 
 const {
   success: { okCode },
