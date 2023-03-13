@@ -24,9 +24,6 @@ afterAll(async () => {
 
 afterEach(async () => {
   await Project.deleteMany();
-});
-
-afterEach(() => {
   jest.clearAllMocks();
 });
 
