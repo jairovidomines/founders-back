@@ -5,7 +5,7 @@ import {
   type ProjectsData,
   type ProjectData,
 } from "../../types/projects/types";
-import { type UserId } from "../../types/users/types.js";
+import { type CustomRequest } from "../../types/users/types.js";
 import statusCodes from "../../utils/statusCode";
 import { getAllProjects, getUserProjects } from "./projectsControllers";
 
@@ -99,21 +99,13 @@ describe("Given a getUserProjects controller", () => {
       const req: Partial<Request> = {};
       const next = jest.fn();
       const expectedStatusCode = statusCodes.success.okCode;
-      req.body = { maker: "1029384756" };
+      req.params = { maker: "1029384756" };
 
       Project.find = jest.fn().mockImplementationOnce(() => ({
         exec: jest.fn().mockReturnValue({ maker: "0192837465" }),
       }));
 
-      await getUserProjects(
-        req as Request<
-          Record<string, unknown>,
-          Record<string, unknown>,
-          UserId
-        >,
-        res as Response,
-        next
-      );
+      await getUserProjects(req as CustomRequest, res as Response, next);
 
       expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
     });
@@ -138,15 +130,7 @@ describe("Given a getUserProjects controller", () => {
 
       Project.find = jest.fn().mockReturnValue(undefined);
 
-      await getUserProjects(
-        req as Request<
-          Record<string, unknown>,
-          Record<string, unknown>,
-          UserId
-        >,
-        res as Response,
-        next
-      );
+      await getUserProjects(req as CustomRequest, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(expectedError);
     });

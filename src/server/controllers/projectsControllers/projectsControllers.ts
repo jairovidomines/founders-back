@@ -1,7 +1,7 @@
 import { type NextFunction, type Request, type Response } from "express";
 import CustomError from "../../../CustomError/CustomError.js";
 import Project from "../../../database/models/Projects/Projects.js";
-import { type UserId } from "../../types/users/types.js";
+import { type CustomRequest } from "../../types/users/types.js";
 import statusCodes from "../../utils/statusCode.js";
 
 const {
@@ -30,14 +30,12 @@ export const getAllProjects = async (
 };
 
 export const getUserProjects = async (
-  req: Request<Record<string, unknown>, Record<string, unknown>, UserId>,
+  req: CustomRequest,
   res: Response,
   next: NextFunction
 ) => {
-  const { maker } = req.body;
-
   try {
-    const projects = await Project.find({ maker }).exec();
+    const projects = await Project.find({ maker: req.maker }).exec();
 
     res.status(okCode).json({ projects });
   } catch (error) {
