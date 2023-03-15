@@ -38,6 +38,10 @@ const projectSchema = new Schema({
     type: String,
     required: true,
   },
+  maker: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Project = model("Project", projectSchema, "projects");

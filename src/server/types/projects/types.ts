@@ -7,10 +7,8 @@ export interface ProjectData {
   avatar: string;
   shortDescription: string;
   description: string;
-}
-
-export interface UserId extends Request {
-  userId: string;
+  id: string;
+  maker: string;
 }
 
 export type ProjectsData = ProjectData[];

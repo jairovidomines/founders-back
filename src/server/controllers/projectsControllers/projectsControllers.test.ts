@@ -5,8 +5,9 @@ import {
   type ProjectsData,
   type ProjectData,
 } from "../../types/projects/types";
+import { type UserId } from "../../types/users/types.js";
 import statusCodes from "../../utils/statusCode";
-import { getProjects } from "./projectsControllers";
+import { getAllProjects, getUserProjects } from "./projectsControllers";
 
 const mockProjectAndroid: ProjectData = {
   name: "Anyone",
@@ -17,6 +18,8 @@ const mockProjectAndroid: ProjectData = {
   avatar: "avatar.webp",
   shortDescription: "This is a short description",
   description: "This is a description",
+  id: "",
+  maker: "",
 };
 
 const mockProjectIos: ProjectData = {
@@ -28,6 +31,8 @@ const mockProjectIos: ProjectData = {
   avatar: "avatar.webp",
   shortDescription: "This is a short description",
   description: "This is a description",
+  id: "",
+  maker: "",
 };
 
 const mockProjectsList: ProjectsData = [mockProjectAndroid, mockProjectIos];
@@ -50,7 +55,7 @@ describe("Given a getProjects controller", () => {
         exec: jest.fn().mockReturnValue(mockProjectsList),
       }));
 
-      await getProjects(req as Request, res as Response, next);
+      await getAllProjects(req as Request, res as Response, next);
 
       expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
     });
@@ -76,7 +81,72 @@ describe("Given a getProjects controller", () => {
 
       Project.find = jest.fn().mockReturnValue(undefined);
 
-      await getProjects(req as Request, res as Response, next);
+      await getAllProjects(req as Request, res as Response, next);
+
+      expect(next).toHaveBeenCalledWith(expectedError);
+    });
+  });
+});
+
+describe("Given a getUserProjects controller", () => {
+  describe("When it receives a response", () => {
+    test("then it should call its status code 200", async () => {
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue(mockProjectsList),
+      };
+
+      const req: Partial<Request> = {};
+      const next = jest.fn();
+      const expectedStatusCode = statusCodes.success.okCode;
+      req.body = { maker: "1029384756" };
+
+      Project.find = jest.fn().mockImplementationOnce(() => ({
+        exec: jest.fn().mockReturnValue({ maker: "0192837465" }),
+      }));
+
+      await getUserProjects(
+        req as Request<
+          Record<string, unknown>,
+          Record<string, unknown>,
+          UserId
+        >,
+        res as Response,
+        next
+      );
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
+    });
+  });
+
+  describe("When it receives a bad request", () => {
+    test("Then it should call its next function", async () => {
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue({}),
+      };
+      const req: Partial<Request> = {};
+      const next = jest.fn();
+
+      const expectedError = new CustomError(
+        "Bad request",
+        statusCodes.clientError.notFound,
+        "Couldn't find projects"
+      );
+
+      req.body = {};
+
+      Project.find = jest.fn().mockReturnValue(undefined);
+
+      await getUserProjects(
+        req as Request<
+          Record<string, unknown>,
+          Record<string, unknown>,
+          UserId
+        >,
+        res as Response,
+        next
+      );
 
       expect(next).toHaveBeenCalledWith(expectedError);
     });
