@@ -3,7 +3,10 @@ const routes = {
     login: "/login",
   },
   projects: {
-    projects: "/projects",
+    projects: "/",
+  },
+  myProjects: {
+    myProjects: "/my-projects",
   },
 };
 
