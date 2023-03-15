@@ -5,7 +5,7 @@ import {
   type CustomRequest,
   type CustomJwtPayload,
 } from "../../types/users/types";
-import statusCodes from "../../utils/statusCode";
+import statusCodes from "../../utils/statusCode.js";
 
 const auth = (req: CustomRequest, res: Response, next: NextFunction) => {
   try {
