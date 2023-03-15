@@ -31,7 +31,7 @@ describe("Given a GET '/projects' endpoint", () => {
   describe("When it receives a request", () => {
     test("Then it should respond with a status code 200", async () => {
       const expectedStatus = success.okCode;
-      const projectsUrl = "/projects/projects";
+      const projectsUrl = "/projects";
 
       await request(app).get(projectsUrl).expect(expectedStatus);
     });
