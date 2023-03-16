@@ -3,7 +3,7 @@ import { type Request } from "express";
 
 export interface CustomJwtPayload extends JwtPayload {
   username: string;
-  id: string;
+  sub: string;
 }
 
 export interface CustomRequest extends Request {
