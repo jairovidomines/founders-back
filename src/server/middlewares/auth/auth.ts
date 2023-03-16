@@ -21,7 +21,7 @@ const auth = (req: CustomRequest, res: Response, next: NextFunction) => {
 
     const token = authorizationHeader.replace(/^Bearer\s*/, "");
 
-    const { id: maker } = jwt.verify(
+    const { sub: maker } = jwt.verify(
       token,
       process.env.JWT_SECRET!
     ) as CustomJwtPayload;

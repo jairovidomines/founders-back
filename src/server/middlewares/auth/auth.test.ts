@@ -62,7 +62,7 @@ describe("Given an auth middleware", () => {
 
       const maker = new mongoose.Types.ObjectId();
 
-      jwt.verify = jest.fn().mockReturnValueOnce({ id: maker });
+      jwt.verify = jest.fn().mockReturnValueOnce({ sub: maker });
 
       auth(req as CustomRequest, res as Response, next);
 
@@ -76,7 +76,7 @@ describe("Given an auth middleware", () => {
       const req: Partial<Request> = {};
 
       const maker = new mongoose.Types.ObjectId();
-      jwt.verify = jest.fn().mockReturnValueOnce({ id: maker });
+      jwt.verify = jest.fn().mockReturnValueOnce({ sub: maker });
 
       auth(req as CustomRequest, res as Response, next);
 

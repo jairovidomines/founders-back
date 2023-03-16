@@ -35,7 +35,7 @@ export const loginUser = async (
     }
 
     const jwtPayload: CustomJwtPayload = {
-      id: user._id.toString(),
+      sub: user._id.toString(),
       username,
     };
 
