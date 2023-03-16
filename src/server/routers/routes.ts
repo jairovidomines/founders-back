@@ -8,6 +8,12 @@ const routes = {
   myProjects: {
     myProjects: "/my-projects",
   },
+  deleteProject: {
+    deleteProject: "/delete",
+  },
+  id: {
+    id: "/:id",
+  },
 };
 
 export default routes;
