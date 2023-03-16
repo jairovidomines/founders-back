@@ -7,6 +7,7 @@ import statusCodes from "../../utils/statusCode.js";
 const {
   success: { okCode },
   clientError: { badRequest },
+  serverError: { internalServer },
 } = statusCodes;
 
 export const getAllProjects = async (
@@ -41,8 +42,33 @@ export const getUserProjects = async (
   } catch (error) {
     const customError = new CustomError(
       "Bad request",
-      statusCodes.clientError.badRequest,
+      badRequest,
       "Couldn't find projects"
+    );
+
+    next(customError);
+  }
+};
+
+export const deleteProjects = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const { idProject } = req.params;
+
+  try {
+    const project = await Project.findByIdAndDelete({
+      _id: idProject,
+      maker: req.maker,
+    }).exec();
+
+    res.status(okCode).json({ project });
+  } catch (error) {
+    const customError = new CustomError(
+      "Internal server error",
+      internalServer,
+      "The project cannot be eliminated"
     );
 
     next(customError);
