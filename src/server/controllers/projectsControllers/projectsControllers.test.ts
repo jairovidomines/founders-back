@@ -7,7 +7,11 @@ import {
 } from "../../types/projects/types";
 import { type CustomRequest } from "../../types/users/types.js";
 import statusCodes from "../../utils/statusCode";
-import { getAllProjects, getUserProjects } from "./projectsControllers";
+import {
+  deleteProjects,
+  getAllProjects,
+  getUserProjects,
+} from "./projectsControllers";
 
 const mockProjectAndroid: ProjectData = {
   name: "Anyone",
@@ -131,6 +135,55 @@ describe("Given a getUserProjects controller", () => {
       Project.find = jest.fn().mockReturnValue(undefined);
 
       await getUserProjects(req as CustomRequest, res as Response, next);
+
+      expect(next).toHaveBeenCalledWith(expectedError);
+    });
+  });
+});
+
+describe("Given a deleteProjects controller", () => {
+  describe("When it receives a request to delete a projects user", () => {
+    test("Then it should call its status code 200", async () => {
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue(mockProjectAndroid.id),
+      };
+      const req: Partial<CustomRequest> = {
+        params: { id: `${mockProjectAndroid.id}` },
+      };
+      const next = jest.fn();
+      const expectedStatus = statusCodes.success.okCode;
+
+      Project.findByIdAndDelete = jest.fn().mockImplementationOnce(() => ({
+        exec: jest.fn().mockReturnValue(mockProjectAndroid),
+      }));
+
+      await deleteProjects(req as CustomRequest, res as Response, next);
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatus);
+    });
+  });
+
+  describe("When it receives a  bad request ", () => {
+    test("Then it should call its next function", async () => {
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue({}),
+      };
+      const req: Partial<CustomRequest> = {};
+      const next = jest.fn();
+
+      req.params = {};
+
+      const expectedError = new CustomError(
+        "Internal server error",
+        statusCodes.serverError.internalServer,
+        "The project cannot be eliminated"
+      );
+
+      Project.findByIdAndDelete = jest.fn().mockReturnValue(undefined);
+
+      await deleteProjects(req as CustomRequest, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(expectedError);
     });
