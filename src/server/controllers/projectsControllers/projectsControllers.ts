@@ -55,11 +55,11 @@ export const deleteProjects = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { idProject } = req.params;
+  const { id } = req.params;
 
   try {
     const project = await Project.findByIdAndDelete({
-      _id: idProject,
+      _id: id,
       maker: req.maker,
     }).exec();
 
