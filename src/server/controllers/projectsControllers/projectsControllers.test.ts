@@ -8,6 +8,7 @@ import {
 import { type CustomRequest } from "../../types/users/types.js";
 import statusCodes from "../../utils/statusCode";
 import {
+  createProject,
   deleteProjects,
   getAllProjects,
   getUserProjects,
@@ -184,6 +185,43 @@ describe("Given a deleteProjects controller", () => {
       Project.findByIdAndDelete = jest.fn().mockReturnValue(undefined);
 
       await deleteProjects(req as CustomRequest, res as Response, next);
+
+      expect(next).toHaveBeenCalledWith(expectedError);
+    });
+  });
+});
+
+describe("Given a createTipById controller", () => {
+  describe("When it receives a request to create a Maranta tip", () => {
+    test("Then it should call its status method with a status 201", async () => {
+      const req: Partial<CustomRequest> = {};
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+      };
+      const next = jest.fn();
+      const expectedStatus = 201;
+
+      Project.create = jest.fn().mockReturnValue({ ...mockProjectAndroid });
+      await createProject(req as CustomRequest, res as Response, next);
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatus);
+    });
+  });
+  describe("When it receives a  bad request ", () => {
+    test("Then it should call its next method with an error and status 500", async () => {
+      const req: Partial<CustomRequest> = {};
+      const res: Partial<Response> = {};
+      const next = jest.fn();
+
+      req.body = {};
+
+      const expectedError = new CustomError(
+        "Internal server error",
+        statusCodes.serverError.internalServer,
+        "The project cannot be created"
+      );
+
+      await createProject(req as CustomRequest, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(expectedError);
     });

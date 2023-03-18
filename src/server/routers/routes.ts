@@ -14,6 +14,9 @@ const routes = {
   id: {
     id: "/:id",
   },
+  create: {
+    create: "/create",
+  },
 };
 
 export default routes;

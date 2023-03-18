@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, type InferSchemaType } from "mongoose";
 
 const projectSchema = new Schema({
   name: {
@@ -19,12 +19,10 @@ const projectSchema = new Schema({
   platforms: {
     type: String,
     required: true,
-    unique: true,
   },
   monthlyUsers: {
     type: String,
     required: true,
-    unique: true,
   },
   avatar: {
     type: String,
@@ -47,3 +45,5 @@ const projectSchema = new Schema({
 const Project = model("Project", projectSchema, "projects");
 
 export default Project;
+
+export type ProjectSchemaStructure = InferSchemaType<typeof projectSchema>;
