@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  createProject,
   deleteProjects,
   getAllProjects,
   getUserProjects,
@@ -11,11 +12,13 @@ const { projects } = routes.projects;
 const { myProjects } = routes.myProjects;
 const { deleteProject } = routes.deleteProject;
 const { id } = routes.id;
+const { create } = routes.create;
 
 const projectsRouter = Router();
 
 projectsRouter.get(projects, getAllProjects);
 projectsRouter.get(myProjects, auth, getUserProjects);
 projectsRouter.delete(`${deleteProject}${id}`, auth, deleteProjects);
+projectsRouter.post(`${create}`, auth, createProject);
 
 export default projectsRouter;
