@@ -8,4 +8,5 @@ export interface CustomJwtPayload extends JwtPayload {
 
 export interface CustomRequest extends Request {
   maker: string;
+  id: string;
 }
