@@ -3,6 +3,7 @@ import {
   createProject,
   deleteProjects,
   getAllProjects,
+  getProjectById,
   getUserProjects,
 } from "../../controllers/projectsControllers/projectsControllers.js";
 import auth from "../../middlewares/auth/auth.js";
@@ -20,5 +21,6 @@ projectsRouter.get(projects, getAllProjects);
 projectsRouter.get(myProjects, auth, getUserProjects);
 projectsRouter.delete(`${deleteProject}${id}`, auth, deleteProjects);
 projectsRouter.post(`${create}`, auth, createProject);
+projectsRouter.get(`${id}`, getProjectById);
 
 export default projectsRouter;
