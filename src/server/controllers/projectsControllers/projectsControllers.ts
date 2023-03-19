@@ -104,3 +104,27 @@ export const createProject = async (
     next(customError);
   }
 };
+
+export const getProjectById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+
+  try {
+    const project = await Project.findById({
+      _id: id,
+    }).exec();
+
+    res.status(okCode).json({ project });
+  } catch (error) {
+    const customError = new CustomError(
+      "Internal server error",
+      internalServer,
+      "Not possible to find the project"
+    );
+
+    next(customError);
+  }
+};

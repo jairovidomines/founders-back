@@ -11,6 +11,7 @@ import {
   createProject,
   deleteProjects,
   getAllProjects,
+  getProjectById,
   getUserProjects,
 } from "./projectsControllers";
 
@@ -163,7 +164,7 @@ describe("Given a deleteProjects controller", () => {
     });
   });
 
-  describe("When it receives a  bad request ", () => {
+  describe("When it receives a bad request ", () => {
     test("Then it should call its next function", async () => {
       const res: Partial<Response> = {
         status: jest.fn().mockReturnThis(),
@@ -190,7 +191,7 @@ describe("Given a deleteProjects controller", () => {
 });
 
 describe("Given a createTipById controller", () => {
-  describe("When it receives a request to create a Maranta tip", () => {
+  describe("When it receives a request to create a project", () => {
     test("Then it should call its status method with a status 201", async () => {
       const req: Partial<CustomRequest> = {};
       const res: Partial<Response> = {
@@ -205,7 +206,7 @@ describe("Given a createTipById controller", () => {
       expect(res.status).toHaveBeenCalledWith(expectedStatus);
     });
   });
-  describe("When it receives a  bad request ", () => {
+  describe("When it receives a bad request ", () => {
     test("Then it should call its next method with an error and status 500", async () => {
       const req: Partial<CustomRequest> = {};
       const res: Partial<Response> = {};
@@ -220,6 +221,56 @@ describe("Given a createTipById controller", () => {
       );
 
       await createProject(req as CustomRequest, res as Response, next);
+
+      expect(next).toHaveBeenCalledWith(expectedError);
+    });
+  });
+});
+
+describe("Given a getProjectById controller", () => {
+  describe("When it receives a request to obtain a specific project", () => {
+    test("Then it should call its status method with a status code 200", async () => {
+      const req: Partial<Request> = { params: { id: mockProjectAndroid.id } };
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue(mockProjectAndroid),
+      };
+
+      const next = jest.fn();
+      req.body = { _id: mockProjectAndroid.id };
+      const expectedstatus = statusCodes.success.okCode;
+
+      Project.findOne = jest.fn().mockImplementationOnce(() => ({
+        exec: jest.fn().mockReturnValue({ _id: mockProjectAndroid.id }),
+      }));
+
+      await getProjectById(req as Request, res as Response, next);
+
+      expect(res.status).toHaveBeenCalledWith(expectedstatus);
+    });
+  });
+
+  describe("When it receives a bad request", () => {
+    test("Then it should call its next method with an error and status 500", async () => {
+      const req: Partial<Request> = {};
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue({}),
+      };
+
+      const next = jest.fn();
+
+      req.params = {};
+
+      const expectedError = new CustomError(
+        "Internal server error",
+        statusCodes.serverError.internalServer,
+        "Not possible to find the project"
+      );
+
+      Project.findById = jest.fn().mockReturnValue(undefined);
+
+      await getProjectById(req as Request, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(expectedError);
     });
