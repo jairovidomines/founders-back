@@ -16,10 +16,6 @@ const projectSchema = new Schema({
     required: true,
     unique: true,
   },
-  platforms: {
-    type: String,
-    required: true,
-  },
   monthlyUsers: {
     type: String,
     required: true,
