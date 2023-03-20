@@ -1,5 +1,4 @@
 import { type NextFunction, type Request, type Response } from "express";
-import mongoose from "mongoose";
 import CustomError from "../../../CustomError/CustomError.js";
 import Project, {
   type ProjectSchemaStructure,
