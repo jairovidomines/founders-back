@@ -85,12 +85,9 @@ export const createProject = async (
 ) => {
   const project = req.body as ProjectSchemaStructure;
 
-  const { id } = req;
-
   try {
     const newProject = await Project.create({
       ...project,
-      maker: new mongoose.Types.ObjectId(id),
     });
 
     res.status(201).json({ ...newProject.toJSON() });
