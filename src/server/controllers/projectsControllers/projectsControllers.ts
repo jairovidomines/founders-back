@@ -17,8 +17,37 @@ export const getAllProjects = async (
   res: Response,
   next: NextFunction
 ) => {
+  const filterByMonthlyUsers = {
+    newbies: "0-25.000",
+    beginners: "25.000-50.000",
+    intermediate: "50.000-75.000",
+    professional: "75.000-100.000",
+    experts: "100.000-150.000",
+    nextLevel: "+200.000",
+  };
+
   try {
-    const projects = await Project.find().exec();
+    let projects;
+
+    if (!req.query) {
+      projects = await Project.find().exec();
+      res.status(okCode).json({ projects });
+    }
+
+    if (
+      req.query.monthlyUsers === filterByMonthlyUsers.newbies ||
+      req.query.monthlyUsers === filterByMonthlyUsers.beginners ||
+      req.query.monthlyUsers === filterByMonthlyUsers.intermediate ||
+      req.query.monthlyUsers === filterByMonthlyUsers.professional ||
+      req.query.monthlyUsers === filterByMonthlyUsers.experts ||
+      req.query.monthlyUsers === filterByMonthlyUsers.nextLevel
+    ) {
+      projects = await Project.find({
+        monthlyUsers: req.query.monthlyUsers,
+      }).exec();
+    } else {
+      projects = await Project.find().exec();
+    }
 
     res.status(okCode).json({ projects });
   } catch (error) {

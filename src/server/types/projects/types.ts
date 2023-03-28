@@ -1,4 +1,4 @@
-export interface ProjectData {
+export interface ProjectStructure {
   name: string;
   website: string;
   twitter: string;
@@ -10,4 +10,4 @@ export interface ProjectData {
   maker: string;
 }
 
-export type ProjectsData = ProjectData[];
+export type ProjectsStructure = ProjectStructure[];
