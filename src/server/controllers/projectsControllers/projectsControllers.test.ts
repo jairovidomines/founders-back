@@ -2,8 +2,8 @@ import { type Request, type Response } from "express";
 import CustomError from "../../../CustomError/CustomError.js";
 import Project from "../../../database/models/Projects/Projects.js";
 import {
-  type ProjectsData,
-  type ProjectData,
+  type ProjectsStructure,
+  type ProjectStructure,
 } from "../../types/projects/types";
 import { type CustomRequest } from "../../types/users/types.js";
 import statusCodes from "../../utils/statusCode";
@@ -15,11 +15,11 @@ import {
   getUserProjects,
 } from "./projectsControllers";
 
-const mockProjectAndroid: ProjectData = {
+const mockProjectAndroid: ProjectStructure = {
   name: "Anyone",
   website: "www.anyone.com",
   twitter: "@anyone",
-  monthlyUsers: "1000",
+  monthlyUsers: "0 - 25.000",
   avatar: "avatar.webp",
   shortDescription: "This is a short description",
   description: "This is a description",
@@ -27,11 +27,11 @@ const mockProjectAndroid: ProjectData = {
   maker: "",
 };
 
-const mockProjectIos: ProjectData = {
+const mockProjectIos: ProjectStructure = {
   name: "Anyone",
   website: "www.anyone.com",
   twitter: "@anyone",
-  monthlyUsers: "1000",
+  monthlyUsers: "0 - 25.000",
   avatar: "avatar.webp",
   shortDescription: "This is a short description",
   description: "This is a description",
@@ -39,24 +39,54 @@ const mockProjectIos: ProjectData = {
   maker: "",
 };
 
-const mockProjectsList: ProjectsData = [mockProjectAndroid, mockProjectIos];
+const mockProjectsList: ProjectsStructure = [
+  mockProjectAndroid,
+  mockProjectIos,
+];
 
-beforeEach(() => jest.resetAllMocks());
+beforeEach(() => jest.clearAllMocks());
 
-describe("Given a getProjects controller", () => {
+describe("Given a getAllProjects controller", () => {
+  const res: Partial<Response> = {
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn().mockResolvedValue(mockProjectAndroid),
+  };
+
+  const req: Partial<Request> = {};
+  const next = jest.fn();
+  const expectedStatusCode = statusCodes.success.okCode;
   describe("When it receives a response", () => {
     test("Then it should call its status code 200", async () => {
-      const res: Partial<Response> = {
-        status: jest.fn().mockReturnThis(),
-        json: jest.fn().mockResolvedValue(mockProjectsList),
-      };
-
-      const req: Partial<Request> = {};
-      const next = jest.fn();
-      const expectedStatusCode = statusCodes.success.okCode;
-
       Project.find = jest.fn().mockImplementationOnce(() => ({
         exec: jest.fn().mockReturnValue(mockProjectsList),
+      }));
+
+      await getAllProjects(req as Request, res as Response, next);
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
+    });
+  });
+
+  describe("When it receives a request to obtain projects without being filtered", () => {
+    test("Then it should call its status code 200 and its json with the found project", async () => {
+      const req: Partial<Request> = { query: {} };
+
+      Project.find = jest.fn().mockImplementationOnce(() => ({
+        exec: jest.fn().mockReturnValue(mockProjectAndroid),
+      }));
+      await getAllProjects(req as Request, res as Response, next);
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
+      expect(res.json).toHaveBeenCalledWith({ projects: mockProjectAndroid });
+    });
+  });
+
+  describe("When it receives a request to obtain projects feing filtered by monthly users 'newbies'", () => {
+    test("Then it should call its status code 200 and its json with the found project", async () => {
+      const req: Partial<Request> = { query: { monthlyUsers: "0-25.000" } };
+
+      Project.find = jest.fn().mockImplementationOnce(() => ({
+        exec: jest.fn().mockReturnValue(mockProjectAndroid),
       }));
 
       await getAllProjects(req as Request, res as Response, next);
