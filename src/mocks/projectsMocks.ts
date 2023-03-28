@@ -8,8 +8,8 @@ export const mockProjectAndroid: ProjectStructure = {
   avatar: "avatar.webp",
   shortDescription: "This is a short description",
   description: "This is a description",
-  id: "13579",
-  maker: "34567",
+  id: "",
+  maker: "",
 };
 
 export const mockProjectIos: ProjectStructure = {
@@ -20,6 +20,6 @@ export const mockProjectIos: ProjectStructure = {
   avatar: "avatar.webp",
   shortDescription: "This is a short description",
   description: "This is a description",
-  id: "2468",
+  id: "",
   maker: "",
 };

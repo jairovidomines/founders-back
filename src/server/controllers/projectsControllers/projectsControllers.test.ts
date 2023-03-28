@@ -2,9 +2,10 @@ import { type Request, type Response } from "express";
 import CustomError from "../../../CustomError/CustomError.js";
 import Project from "../../../database/models/Projects/Projects.js";
 import {
-  type ProjectsStructure,
-  type ProjectStructure,
-} from "../../types/projects/types";
+  mockProjectAndroid,
+  mockProjectIos,
+} from "../../../mocks/projectsMocks.js";
+import { type ProjectsStructure } from "../../types/projects/types";
 import { type CustomRequest } from "../../types/users/types.js";
 import statusCodes from "../../utils/statusCode";
 import {
@@ -14,30 +15,6 @@ import {
   getProjectById,
   getUserProjects,
 } from "./projectsControllers";
-
-const mockProjectAndroid: ProjectStructure = {
-  name: "Anyone",
-  website: "www.anyone.com",
-  twitter: "@anyone",
-  monthlyUsers: "0 - 25.000",
-  avatar: "avatar.webp",
-  shortDescription: "This is a short description",
-  description: "This is a description",
-  id: "",
-  maker: "",
-};
-
-const mockProjectIos: ProjectStructure = {
-  name: "Anyone",
-  website: "www.anyone.com",
-  twitter: "@anyone",
-  monthlyUsers: "0 - 25.000",
-  avatar: "avatar.webp",
-  shortDescription: "This is a short description",
-  description: "This is a description",
-  id: "",
-  maker: "",
-};
 
 const mockProjectsList: ProjectsStructure = [
   mockProjectAndroid,
